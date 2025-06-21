@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pharmacy Dashboard - MediMate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pharmacy Dashboard</h1>
+    
+    <input type="text" id="medicineName" placeholder="Enter medicine name">
+    
+    <select id="stockStatus">
+      <option value="true">In Stock</option>
+      <option value="false">Out of Stock</option>
+    </select>
+    
+    <button onclick="addMedicine()">Add Medicine</button>
+
+    <h3>Current Stock:</h3>
+    <div id="medicineList"></div>
+  </div>
+
+  <script>
+    const medicineList = [];
+
+    function addMedicine() {
+      const name = document.getElementById("medicineName").value.trim();
+      const stock = document.getElementById("stockStatus").value === "true";
+      const listDiv = document.getElementById("medicineList");
+
+      if (!name) {
+        alert("Please enter a medicine name.");
+        return;
+      }
+
+      // Add to array
+      medicineList.push({ name, stock });
+
+      // Update UI
+      listDiv.innerHTML = "";
+      medicineList.forEach((item, index) => {
+        listDiv.innerHTML += `
+          <div class="card">
+            <strong>${index + 1}. ${item.name}</strong><br>
+            Status: ${item.stock ? "✅ In Stock" : "❌ Out of Stock"}
+          </div>
+        `;
+      });
+
+      // Clear input
+      document.getElementById("medicineName").value = "";
+    }
+  </script>
+</body>
+</html>
