@@ -8,9 +8,42 @@
 <body>
   <div class="container">
     <h1>MediMate</h1>
-    <input type="text" id="search" placeholder="Enter medicine name" />
-    <button>Search</button>
+    <input type="text" id="searchInput" placeholder="Enter medicine name">
+    <button onclick="searchMedicine()">Search</button>
     <div id="results"></div>
   </div>
+
+  <script>
+    const dummyData = [
+      { name: "Paracetamol", pharmacy: "Sri Sai Medicals", stock: true },
+      { name: "Ibuprofen", pharmacy: "City Medico", stock: false },
+      { name: "Dolo 650", pharmacy: "Apollo Pharmacy", stock: true }
+    ];
+
+    function searchMedicine() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      const filtered = dummyData.filter(item =>
+        item.name.toLowerCase().includes(input)
+      );
+
+      if (filtered.length === 0) {
+        resultsDiv.innerHTML = "<p>No medicines found.</p>";
+      } else {
+        filtered.forEach(item => {
+          resultsDiv.innerHTML += `
+            <div class="card">
+              <h3>${item.name}</h3>
+              <p><strong>Pharmacy:</strong> ${item.pharmacy}</p>
+              <p><strong>Status:</strong> ${item.stock ? "✅ In Stock" : "❌ Out of Stock"}</p>
+            </div>
+          `;
+        });
+      }
+    }
+  </script>
 </body>
 </html>
+
